@@ -1,0 +1,2 @@
+ALTER TABLE IF EXISTS public.task
+DROP COLUMN IF EXISTS is_completed;
