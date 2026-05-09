@@ -61,14 +61,31 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
             />
           </div>
 
-          <div>
-            <label className="mb-1 block text-sm font-medium">期限</label>
-            <input
-              type="date"
-              name="due_date"
-              defaultValue={task?.due_date ?? ''}
-              className="w-full rounded-md border px-3 py-2"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium">分類</label>
+
+              <div className="pl-4 flex items-center gap-4">
+                <label className="flex items-center gap-1">
+                  <input type="radio" name="spot_task" value="false" defaultChecked={!task?.spot_task} />
+                  期限
+                </label>
+
+                <label className="flex items-center gap-1">
+                  <input type="radio" name="spot_task" value="true" defaultChecked={task?.spot_task} />
+                  スポット
+                </label>
+              </div>
+            </div>
+            <div>
+              <label className="mb-1 block text-sm font-medium">期限</label>
+              <input
+                type="date"
+                name="due_date"
+                defaultValue={task?.due_date ?? ''}
+                className="w-full rounded-md border px-3 py-2"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

@@ -23,6 +23,7 @@ export async function addTask(formData: FormData) {
   }
 
   const title = formData.get('title');
+  const spot_task = formData.get('spot_task');
   const status = formData.get('status');
   const priority = formData.get('priority');
   const dueDate = formData.get('due_date');
@@ -31,6 +32,12 @@ export async function addTask(formData: FormData) {
   if (typeof title !== 'string' || title.trim() === '') {
     return;
   }
+
+  if (typeof spot_task !== 'string' || !['true', 'false'].includes(spot_task)) {
+    return;
+  }
+
+  const spotTask = spot_task === 'true';
 
   if (typeof status !== 'string' || !VALID_STATUS.includes(status)) {
     return;
@@ -58,6 +65,7 @@ export async function addTask(formData: FormData) {
 
   const newTask: NewTask = {
     title: title.trim(),
+    spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
     due_date,
@@ -130,6 +138,7 @@ export async function updateTask(formData: FormData) {
   if (Number.isNaN(taskIdNumber)) return;
 
   const title = formData.get('title');
+  const spot_task = formData.get('spot_task');
   const status = formData.get('status');
   const priority = formData.get('priority');
   const dueDate = formData.get('due_date');
@@ -138,6 +147,12 @@ export async function updateTask(formData: FormData) {
   if (typeof title !== 'string' || title.trim() === '') {
     return;
   }
+
+  if (typeof spot_task !== 'string' || !['true', 'false'].includes(spot_task)) {
+    return;
+  }
+
+  const spotTask = spot_task === 'true';
 
   if (typeof status !== 'string' || !VALID_STATUS.includes(status)) {
     return;
@@ -163,15 +178,16 @@ export async function updateTask(formData: FormData) {
     memoText = memo.trim();
   }
 
-  const updatedTask : UpdatedTask = {
-    title:title.trim(),
+  const updatedTask: UpdatedTask = {
+    title: title.trim(),
+    spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
     due_date,
-    memo:memoText
-  }
+    memo: memoText
+  };
 
-  const {error} = await supabase.from('task').update(updatedTask).eq('id',taskIdNumber).eq('user_id',user.id);
+  const { error } = await supabase.from('task').update(updatedTask).eq('id', taskIdNumber).eq('user_id', user.id);
 
   if (error) {
     console.error('タスク更新エラー:', error.message);

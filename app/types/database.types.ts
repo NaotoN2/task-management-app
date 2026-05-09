@@ -43,10 +43,10 @@ export type Database = {
         Row: {
           created_at: string
           due_date: string | null
-          event_task: boolean
           id: number
           memo: string | null
           priority: Database["public"]["Enums"]["task_priority"]
+          spot_task: boolean
           status: Database["public"]["Enums"]["task_status"]
           title: string
           updated_at: string
@@ -55,10 +55,10 @@ export type Database = {
         Insert: {
           created_at?: string
           due_date?: string | null
-          event_task?: boolean
           id?: number
           memo?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
           title: string
           updated_at?: string
@@ -67,10 +67,10 @@ export type Database = {
         Update: {
           created_at?: string
           due_date?: string | null
-          event_task?: boolean
           id?: number
           memo?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
           title?: string
           updated_at?: string

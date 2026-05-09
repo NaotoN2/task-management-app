@@ -33,7 +33,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   let query = supabase
     .from('task')
-    .select('id, title, event_task ,due_date, status, priority, memo')
+    .select('id, title, spot_task ,due_date, status, priority, memo')
     .eq('user_id', user.id);
 
   if (normalizedStatusValues.length > 0) {
@@ -98,7 +98,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
             {tasks?.map((task) => (
               <tr key={task.id} className="hover:bg-gray-50">
                 <td className="border-b px-4 py-3">{task.title}</td>
-                <td className="border-b px-4 py-3">{task.event_task}</td>
+                <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
                 <td className="border-b px-4 py-3">{task.due_date ?? '-'}</td>
                 <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                 <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
