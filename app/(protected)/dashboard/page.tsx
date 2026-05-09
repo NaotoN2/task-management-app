@@ -1,64 +1,29 @@
-import { createClient } from '@/lib/supabase/server';
-import { addTask, deleteTask,} from '../tasks/actions';
+import MiniCalendarPanel from './MiniCalendar';
+import SummaryCard from './SummaryCard';
+import TodayTasksPanel from './TodayTaskPanel';
+import UrgentTodayPanel from './UrgentAndTodayPanel';
 
-
-export default async function DashboardPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user }
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return <div>ユーザー情報を取得できませんでした</div>;
-  }
-
-  const { data, error } = await supabase
-    .from('task')
-    .select('*')
-    .eq('user_id', user.id)
-    .order('id', { ascending: true });
-
-  if (error) {
-    return <div>エラー：{error.message}</div>;
-  }
-
+export default function DashboardPage() {
   return (
-    <main>
-      <h1>Dashboard</h1>
+    <main className="mx-auto w-full max-w-6xl p-6">
+      <div className="mb-6">
+        <h1 className="text-2xl">Dashboard</h1>
+      </div>
 
-      <form action={addTask}>
-        <input type="text" name="title" placeholder="タスク名を入力" />
+      <section className="mb-6 grid grid-cols-3 gap-4">
+        <SummaryCard title="完了タスク" />
+        <SummaryCard title="残りのタスク" />
+        <SummaryCard title="期限超過" />
+      </section>
 
-        <select name="status" defaultValue="todo">
-          <option value="todo">未着手</option>
-          <option value="in_progress">進行中</option>
-          <option value="done">完了済</option>
-        </select>
+      <section className="grid grid-cols-[2fr_1fr] gap-4">
+        <TodayTasksPanel />
 
-        <select name="priority" defaultValue="medium">
-          <option value="low">低</option>
-          <option value="medium">中</option>
-          <option value="high">高</option>
-        </select>
-
-        <input type='date' name='due_date'></input>
-
-        <button type="submit">追加</button>
-      </form>
-
-      <ul>
-        {data.map((task) => (
-          <li key={task.id}>
-            <span>{task.title}</span>
-
-            <form action={deleteTask} style={{ display: 'inline', marginLeft: '8px' }}>
-              <input type="hidden" name="taskId" value={task.id} />
-              <button type="submit">削除</button>
-            </form>
-          </li>
-        ))}
-      </ul>
+        <div className="flex flex-col gap-4">
+          <UrgentTodayPanel />
+          <MiniCalendarPanel />
+        </div>
+      </section>
     </main>
   );
 }
