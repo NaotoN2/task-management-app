@@ -31,7 +31,10 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
     return <main className="p-6">ユーザー情報を取得できませんでした</main>;
   }
 
-  let query = supabase.from('task').select('id, title, due_date, status, priority, memo').eq('user_id', user.id);
+  let query = supabase
+    .from('task')
+    .select('id, title, event_task ,due_date, status, priority, memo')
+    .eq('user_id', user.id);
 
   if (normalizedStatusValues.length > 0) {
     query = query.in('status', normalizedStatusValues);
@@ -66,7 +69,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
   return (
     <main className="p-6">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">作業一覧</h1>
+        <h1 className="text-2xl font-bold">タスク一覧</h1>
         <div className="flex items-center gap-2">
           <SearchForm />
 
@@ -83,8 +86,9 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
           <thead className="bg-gray-100">
             <tr>
               <th className="border-b px-4 py-3 text-left">項目名</th>
-              <th className="border-b px-4 py-3 text-left">期限</th>
-              <th className="border-b px-4 py-3 text-left">進行状況</th>
+              <th className="border-b px-4 py-3 text-left">分類</th>
+              <th className="border-b px-4 py-3 text-left">日付</th>
+              <th className="border-b px-4 py-3 text-left">状況</th>
               <th className="border-b px-4 py-3 text-left">重要度</th>
               <th className="border-b px-4 py-3 text-left">メモ</th>
               <th className="border-b px-4 py-3 text-left">変更</th>
@@ -94,6 +98,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
             {tasks?.map((task) => (
               <tr key={task.id} className="hover:bg-gray-50">
                 <td className="border-b px-4 py-3">{task.title}</td>
+                <td className="border-b px-4 py-3">{task.event_task}</td>
                 <td className="border-b px-4 py-3">{task.due_date ?? '-'}</td>
                 <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                 <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
