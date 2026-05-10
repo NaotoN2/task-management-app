@@ -138,7 +138,6 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
                 name="status"
                 value={isNonTodaySpotTask ? 'todo' : status}
                 onChange={(e) => setStatus(e.target.value as Task['status'])}
-                disabled={isNonTodaySpotTask}
                 className="w-full rounded-md border px-3 py-2"
               >
                 {statusOptions.map((statusOption) => (
