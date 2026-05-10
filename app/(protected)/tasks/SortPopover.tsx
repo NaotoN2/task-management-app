@@ -45,8 +45,8 @@ export default function SortPopover() {
                 className="w-full rounded-md border px-3 py-2 text-sm"
               >
                 <option value={SORT_VALUES.DEFAULT}>追加順</option>
-                <option value={SORT_VALUES.DUE_ASC}>期限が近い順</option>
-                <option value={SORT_VALUES.DUE_DESC}>期限が遠い順</option>
+                <option value={SORT_VALUES.DATE_ASC}>期限が近い順</option>
+                <option value={SORT_VALUES.DATE_DESC}>期限が遠い順</option>
                 <option value={SORT_VALUES.PRIORITY_DESC}>重要度が高い順</option>
                 <option value={SORT_VALUES.PRIORITY_ASC}>重要度が低い順</option>
               </select>

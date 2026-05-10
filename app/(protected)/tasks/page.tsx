@@ -33,7 +33,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   let query = supabase
     .from('task')
-    .select('id, title, spot_task ,due_date, status, priority, memo')
+    .select('id, title, spot_task ,task_date, status, priority, memo')
     .eq('user_id', user.id);
 
   if (normalizedStatusValues.length > 0) {
@@ -48,10 +48,10 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
     query = query.ilike('title', `%${normalizedQuery}%`);
   }
 
-  if (normalizedSort === SORT_VALUES.DUE_ASC) {
-    query = query.order('due_date', { ascending: true, nullsFirst: false });
-  } else if (normalizedSort === SORT_VALUES.DUE_DESC) {
-    query = query.order('due_date', { ascending: false, nullsFirst: false });
+  if (normalizedSort === SORT_VALUES.DATE_ASC) {
+    query = query.order('task_date', { ascending: true, nullsFirst: false });
+  } else if (normalizedSort === SORT_VALUES.DATE_DESC) {
+    query = query.order('task_date', { ascending: false, nullsFirst: false });
   } else if (normalizedSort === SORT_VALUES.PRIORITY_DESC) {
     query = query.order('priority', { ascending: false, nullsFirst: false });
   } else if (normalizedSort === SORT_VALUES.PRIORITY_ASC) {
@@ -99,7 +99,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
               <tr key={task.id} className="hover:bg-gray-50">
                 <td className="border-b px-4 py-3">{task.title}</td>
                 <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
-                <td className="border-b px-4 py-3">{task.due_date ?? '-'}</td>
+                <td className="border-b px-4 py-3">{task.task_date ?? '-'}</td>
                 <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                 <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
                 <td className="border-b px-4 py-3">{task.memo ?? '-'}</td>

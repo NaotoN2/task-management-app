@@ -81,8 +81,8 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
               <label className="mb-1 block text-sm font-medium">期限</label>
               <input
                 type="date"
-                name="due_date"
-                defaultValue={task?.due_date ?? ''}
+                name="task_date"
+                defaultValue={task?.task_date ?? ''}
                 className="w-full rounded-md border px-3 py-2"
               />
             </div>

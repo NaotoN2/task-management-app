@@ -7,4 +7,4 @@ export type UpdatedTask = Database['public']['Tables']['task']['Update'];
 export type TaskStatus = Task['status'];
 export type TaskPriority = Task['priority'];
 
-export type TaskListItem = Pick<Task, 'id' | 'title' | 'spot_task' | 'due_date' | 'status' | 'priority' | 'memo'>;
+export type TaskListItem = Pick<Task, 'id' | 'title' | 'spot_task' | 'task_date' | 'status' | 'priority' | 'memo'>;

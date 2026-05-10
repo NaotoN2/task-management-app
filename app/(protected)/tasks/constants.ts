@@ -2,8 +2,8 @@ import { TaskPriority, TaskStatus } from '@/app/types/task';
 
 export const SORT_VALUES = {
   DEFAULT: '',
-  DUE_ASC: 'due_asc',
-  DUE_DESC: 'due_desc',
+  DATE_ASC: 'date_asc',
+  DATE_DESC: 'date_desc',
   PRIORITY_DESC: 'priority_desc',
   PRIORITY_ASC: 'priority_asc'
 } as const;

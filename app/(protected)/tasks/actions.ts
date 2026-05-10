@@ -26,7 +26,7 @@ export async function addTask(formData: FormData) {
   const spot_task = formData.get('spot_task');
   const status = formData.get('status');
   const priority = formData.get('priority');
-  const dueDate = formData.get('due_date');
+  const taskDate = formData.get('task_date');
   const memo = formData.get('memo');
 
   if (typeof title !== 'string' || title.trim() === '') {
@@ -51,10 +51,10 @@ export async function addTask(formData: FormData) {
 
   const taskPriority = priority as Task['priority'];
 
-  let due_date: string | null = null;
+  let task_date: string | null = null;
 
-  if (typeof dueDate === 'string' && dueDate.trim() !== '') {
-    due_date = dueDate;
+  if (typeof taskDate === 'string' && taskDate.trim() !== '') {
+    task_date = taskDate;
   }
 
   let memoText: string | null = null;
@@ -68,7 +68,7 @@ export async function addTask(formData: FormData) {
     spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
-    due_date,
+    task_date,
     memo: memoText,
     user_id: user.id
   };
@@ -141,7 +141,7 @@ export async function updateTask(formData: FormData) {
   const spot_task = formData.get('spot_task');
   const status = formData.get('status');
   const priority = formData.get('priority');
-  const dueDate = formData.get('due_date');
+  const taskDate = formData.get('task_date');
   const memo = formData.get('memo');
 
   if (typeof title !== 'string' || title.trim() === '') {
@@ -166,10 +166,10 @@ export async function updateTask(formData: FormData) {
 
   const taskPriority = priority as Task['priority'];
 
-  let due_date: string | null = null;
+  let task_date: string | null = null;
 
-  if (typeof dueDate === 'string' && dueDate.trim() !== '') {
-    due_date = dueDate;
+  if (typeof taskDate === 'string' && taskDate.trim() !== '') {
+    task_date = taskDate;
   }
 
   let memoText: string | null = null;
@@ -183,7 +183,7 @@ export async function updateTask(formData: FormData) {
     spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
-    due_date,
+    task_date,
     memo: memoText
   };
 
