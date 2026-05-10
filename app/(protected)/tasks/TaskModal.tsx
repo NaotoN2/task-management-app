@@ -1,7 +1,8 @@
 'use client';
 
-import type { TaskListItem } from '@/app/types/task';
+import type { Task, TaskListItem } from '@/app/types/task';
 import { addTask, deleteTask, updateTask } from './actions';
+import { useState } from 'react';
 
 type TaskModalProps = {
   mode: 'create' | 'edit';
@@ -11,6 +12,9 @@ type TaskModalProps = {
 
 export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
   const isEditMode = mode === 'edit';
+
+  const [isSpotTask, setIsSpotTask] = useState(task?.spot_task ?? false);
+  const [status, setStatus] = useState<Task['status']>(task?.status ?? 'todo');
 
   async function handleSubmit(formData: FormData) {
     const result = isEditMode ? await updateTask(formData) : await addTask(formData);
@@ -67,12 +71,27 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
 
               <div className="pl-4 flex items-center gap-4">
                 <label className="flex items-center gap-1">
-                  <input type="radio" name="spot_task" value="false" defaultChecked={!task?.spot_task} />
+                  <input
+                    type="radio"
+                    name="spot_task"
+                    value="false"
+                    checked={!isSpotTask}
+                    onChange={() => setIsSpotTask(false)}
+                  />
                   期限
                 </label>
 
                 <label className="flex items-center gap-1">
-                  <input type="radio" name="spot_task" value="true" defaultChecked={task?.spot_task} />
+                  <input
+                    type="radio"
+                    name="spot_task"
+                    value="true"
+                    checked={isSpotTask}
+                    onChange={() => {
+                      setIsSpotTask(true);
+                      setStatus('todo');
+                    }}
+                  />
                   スポット
                 </label>
               </div>
@@ -91,9 +110,13 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="mb-1 block text-sm font-medium">進行状況</label>
+              {isSpotTask && <input type="hidden" name="status" value={'todo'} />}
+
               <select
                 name="status"
-                defaultValue={task?.status ?? 'todo'}
+                value={status}
+                onChange={(e) => setStatus(e.target.value as Task['status'])}
+                disabled={isSpotTask}
                 className="w-full rounded-md border px-3 py-2"
               >
                 <option value="todo">未着手</option>

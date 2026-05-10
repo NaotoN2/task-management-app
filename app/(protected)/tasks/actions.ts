@@ -43,7 +43,7 @@ export async function addTask(formData: FormData) {
     return;
   }
 
-  const taskStatus = status as Task['status'];
+  const taskStatus = spotTask ? 'todo' : (status as Task['status']);
 
   if (typeof priority !== 'string' || !VALID_PRIORITY.includes(priority)) {
     return;
@@ -158,7 +158,7 @@ export async function updateTask(formData: FormData) {
     return;
   }
 
-  const taskStatus = status as Task['status'];
+  const taskStatus = spotTask ? 'todo' : (status as Task['status']);
 
   if (typeof priority !== 'string' || !VALID_PRIORITY.includes(priority)) {
     return;
