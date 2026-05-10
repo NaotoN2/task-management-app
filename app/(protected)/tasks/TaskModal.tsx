@@ -12,9 +12,29 @@ type TaskModalProps = {
 
 export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
   const isEditMode = mode === 'edit';
+  const today = new Date().toLocaleDateString('sv-SE', {
+    timeZone: 'Asia/Tokyo'
+  });
 
   const [isSpotTask, setIsSpotTask] = useState(task?.spot_task ?? false);
   const [status, setStatus] = useState<Task['status']>(task?.status ?? 'todo');
+  const [taskDate, setTaskDate] = useState(task?.task_date ?? '');
+
+  const isTodaySpotTask = isSpotTask && taskDate === today;
+  const isNonTodaySpotTask = isSpotTask && !isTodaySpotTask;
+
+  const statusOptions = isSpotTask
+    ? isTodaySpotTask
+      ? [
+          { value: 'todo', label: '未着手' },
+          { value: 'done', label: '完了' }
+        ]
+      : [{ value: 'todo', label: '未着手' }]
+    : [
+        { value: 'todo', label: '未着手' },
+        { value: 'in_progress', label: '進行中' },
+        { value: 'done', label: '完了' }
+      ];
 
   async function handleSubmit(formData: FormData) {
     const result = isEditMode ? await updateTask(formData) : await addTask(formData);
@@ -101,7 +121,10 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
               <input
                 type="date"
                 name="task_date"
-                defaultValue={task?.task_date ?? ''}
+                value={taskDate}
+                onChange={(e) => {
+                  setTaskDate(e.target.value);
+                }}
                 className="w-full rounded-md border px-3 py-2"
               />
             </div>
@@ -110,18 +133,19 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="mb-1 block text-sm font-medium">進行状況</label>
-              {isSpotTask && <input type="hidden" name="status" value={'todo'} />}
 
               <select
                 name="status"
-                value={status}
+                value={isNonTodaySpotTask ? 'todo' : status}
                 onChange={(e) => setStatus(e.target.value as Task['status'])}
-                disabled={isSpotTask}
+                disabled={isNonTodaySpotTask}
                 className="w-full rounded-md border px-3 py-2"
               >
-                <option value="todo">未着手</option>
-                <option value="in_progress">進行中</option>
-                <option value="done">完了</option>
+                {statusOptions.map((statusOption) => (
+                  <option key={statusOption.value} value={statusOption.value}>
+                    {statusOption.label}
+                  </option>
+                ))}
               </select>
             </div>
 

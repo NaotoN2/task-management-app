@@ -4,8 +4,8 @@ import { NewTask, Task, UpdatedTask } from '@/app/types/task';
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-const VALID_STATUS = ['todo', 'in_progress', 'done'];
-const VALID_PRIORITY = ['low', 'medium', 'high'];
+const VALID_STATUS = ['todo', 'in_progress', 'done'] ;
+const VALID_PRIORITY = ['low', 'medium', 'high'] ;
 
 async function getActionContext() {
   const supabase = await createClient();
@@ -13,6 +13,32 @@ async function getActionContext() {
     data: { user }
   } = await supabase.auth.getUser();
   return { supabase, user };
+}
+
+function getTodayString() {
+  return new Date().toLocaleDateString('sv-SE', {
+    timeZone: 'Asia/Tokyo'
+  });
+}
+
+function resolveTaskStatus({
+  spotTask,
+  taskDate,
+  status
+}: {
+  spotTask: boolean;
+  taskDate: string | null;
+  status: Task['status'];
+}): Task['status'] {
+  const today = getTodayString();
+
+  if (!spotTask) {
+    return status;
+  }
+  if (taskDate === today) {
+    return status === 'done' ? 'done' : 'todo';
+  }
+  return 'todo';
 }
 
 export async function addTask(formData: FormData) {
@@ -43,8 +69,6 @@ export async function addTask(formData: FormData) {
     return;
   }
 
-  const taskStatus = spotTask ? 'todo' : (status as Task['status']);
-
   if (typeof priority !== 'string' || !VALID_PRIORITY.includes(priority)) {
     return;
   }
@@ -62,6 +86,12 @@ export async function addTask(formData: FormData) {
   if (typeof memo === 'string' && memo.trim() !== '') {
     memoText = memo.trim();
   }
+
+  const taskStatus = resolveTaskStatus({
+    spotTask,
+    taskDate: task_date,
+    status: status as Task['status']
+  });
 
   const newTask: NewTask = {
     title: title.trim(),
@@ -158,8 +188,6 @@ export async function updateTask(formData: FormData) {
     return;
   }
 
-  const taskStatus = spotTask ? 'todo' : (status as Task['status']);
-
   if (typeof priority !== 'string' || !VALID_PRIORITY.includes(priority)) {
     return;
   }
@@ -177,6 +205,12 @@ export async function updateTask(formData: FormData) {
   if (typeof memo === 'string' && memo.trim() !== '') {
     memoText = memo.trim();
   }
+
+  const taskStatus = resolveTaskStatus({
+    spotTask,
+    taskDate: task_date,
+    status: status as Task['status']
+  });
 
   const updatedTask: UpdatedTask = {
     title: title.trim(),
