@@ -117,7 +117,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
               </div>
             </div>
             <div>
-              <label className="mb-1 block text-sm font-medium">期限</label>
+              <label className="mb-1 block text-sm font-medium">日付</label>
               <input
                 type="date"
                 name="task_date"

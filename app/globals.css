@@ -1,1 +1,8 @@
 @import "tailwindcss";
+
+.mini-calendar .fc { font-size: 0.6rem; }
+
+.mini-calendar .fc-daygrid-day-number {
+  margin-right: auto !important;
+  padding: 2px 0 0 2px;
+}
