@@ -16,6 +16,10 @@ export default function SidebarNav() {
       <Link href={'/tasks'} className={getClass('/tasks')}>
         Tasks
       </Link>
+      <Link href={'/calendar'} className={getClass('/calendar')}>
+        Calendar
+      </Link>
+      
     </nav>
   );
 }
