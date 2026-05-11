@@ -4,8 +4,8 @@ import { NewTask, Task, UpdatedTask } from '@/app/types/task';
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-const VALID_STATUS = ['todo', 'in_progress', 'done'] ;
-const VALID_PRIORITY = ['low', 'medium', 'high'] ;
+const VALID_STATUS = ['todo', 'in_progress', 'done'];
+const VALID_PRIORITY = ['low', 'medium', 'high'];
 
 async function getActionContext() {
   const supabase = await createClient();
@@ -27,7 +27,7 @@ function resolveTaskStatus({
   status
 }: {
   spotTask: boolean;
-  taskDate: string | null;
+  taskDate: string;
   status: Task['status'];
 }): Task['status'] {
   const today = getTodayString();
@@ -75,10 +75,8 @@ export async function addTask(formData: FormData) {
 
   const taskPriority = priority as Task['priority'];
 
-  let task_date: string | null = null;
-
-  if (typeof taskDate === 'string' && taskDate.trim() !== '') {
-    task_date = taskDate;
+  if (typeof taskDate !== 'string' || taskDate.trim() === '') {
+    return;
   }
 
   let memoText: string | null = null;
@@ -89,7 +87,7 @@ export async function addTask(formData: FormData) {
 
   const taskStatus = resolveTaskStatus({
     spotTask,
-    taskDate: task_date,
+    taskDate,
     status: status as Task['status']
   });
 
@@ -98,7 +96,7 @@ export async function addTask(formData: FormData) {
     spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
-    task_date,
+    task_date: taskDate,
     memo: memoText,
     user_id: user.id
   };
@@ -194,10 +192,8 @@ export async function updateTask(formData: FormData) {
 
   const taskPriority = priority as Task['priority'];
 
-  let task_date: string | null = null;
-
-  if (typeof taskDate === 'string' && taskDate.trim() !== '') {
-    task_date = taskDate;
+  if (typeof taskDate !== 'string' || taskDate.trim() === '') {
+    return;
   }
 
   let memoText: string | null = null;
@@ -208,7 +204,7 @@ export async function updateTask(formData: FormData) {
 
   const taskStatus = resolveTaskStatus({
     spotTask,
-    taskDate: task_date,
+    taskDate,
     status: status as Task['status']
   });
 
@@ -217,7 +213,7 @@ export async function updateTask(formData: FormData) {
     spot_task: spotTask,
     status: taskStatus,
     priority: taskPriority,
-    task_date,
+    task_date: taskDate,
     memo: memoText
   };
 

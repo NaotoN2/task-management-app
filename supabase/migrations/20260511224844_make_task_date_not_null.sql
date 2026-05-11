@@ -1,0 +1,2 @@
+ALTER TABLE task
+ ALTER COLUMN task_date SET NOT NULL;

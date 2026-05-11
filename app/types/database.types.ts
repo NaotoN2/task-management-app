@@ -47,7 +47,7 @@ export type Database = {
           priority: Database["public"]["Enums"]["task_priority"]
           spot_task: boolean
           status: Database["public"]["Enums"]["task_status"]
-          task_date: string | null
+          task_date: string
           title: string
           updated_at: string
           user_id: string | null
@@ -59,7 +59,7 @@ export type Database = {
           priority?: Database["public"]["Enums"]["task_priority"]
           spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
-          task_date?: string | null
+          task_date: string
           title: string
           updated_at?: string
           user_id?: string | null
@@ -71,7 +71,7 @@ export type Database = {
           priority?: Database["public"]["Enums"]["task_priority"]
           spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
-          task_date?: string | null
+          task_date?: string
           title?: string
           updated_at?: string
           user_id?: string | null
