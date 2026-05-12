@@ -78,6 +78,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           <div>
             <label className="mb-1 block text-sm font-medium">項目名</label>
             <input
+              required
               type="text"
               name="title"
               defaultValue={task?.title ?? ''}
@@ -119,6 +120,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
             <div>
               <label className="mb-1 block text-sm font-medium">日付</label>
               <input
+                required
                 type="date"
                 name="task_date"
                 value={taskDate}

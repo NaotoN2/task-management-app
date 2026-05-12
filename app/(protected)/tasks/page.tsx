@@ -49,13 +49,13 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
   }
 
   if (normalizedSort === SORT_VALUES.DATE_ASC) {
-    query = query.order('task_date', { ascending: true, nullsFirst: false });
+    query = query.order('task_date', { ascending: true});
   } else if (normalizedSort === SORT_VALUES.DATE_DESC) {
-    query = query.order('task_date', { ascending: false, nullsFirst: false });
+    query = query.order('task_date', { ascending: false});
   } else if (normalizedSort === SORT_VALUES.PRIORITY_DESC) {
-    query = query.order('priority', { ascending: false, nullsFirst: false });
+    query = query.order('priority', { ascending: false});
   } else if (normalizedSort === SORT_VALUES.PRIORITY_ASC) {
-    query = query.order('priority', { ascending: true, nullsFirst: false });
+    query = query.order('priority', { ascending: true});
   } else {
     query = query.order('id', { ascending: true });
   }
@@ -99,7 +99,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
               <tr key={task.id} className="hover:bg-gray-50">
                 <td className="border-b px-4 py-3">{task.title}</td>
                 <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
-                <td className="border-b px-4 py-3">{task.task_date ?? '-'}</td>
+                <td className="border-b px-4 py-3">{task.task_date}</td>
                 <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                 <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
                 <td className="border-b px-4 py-3">{task.memo ?? '-'}</td>
