@@ -75,6 +75,27 @@ export default function FilterPopover() {
               閉じる
             </button>
           </div>
+           <div className="mb-4">
+            <p className="mb-2 text-sm font-semibold">分類</p>
+
+            <div className="flex  gap-8 text-sm">
+              <label className="flex  items-center gap-2">
+                <input
+                  type="checkbox"
+                />
+                期限
+              </label>
+
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                />
+                スポット
+              </label>
+            </div>
+          </div>
+
+
           <div className="mb-4">
             <p className="mb-2 text-sm font-semibold">進行状況</p>
 
