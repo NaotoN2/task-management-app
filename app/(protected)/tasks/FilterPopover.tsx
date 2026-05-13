@@ -1,7 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { isTaskPriority, isTaskStatus, PRIORITY_VALUES, STATUS_VALUES } from './constants';
+import {
+  isTaskPriority,
+  isTaskStatus,
+  isTaskTypeValue,
+  PRIORITY_VALUES,
+  STATUS_VALUES,
+  TASK_TYPE_VALUES,
+  type TaskType
+} from './constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { TaskPriority, TaskStatus } from '@/app/types/task';
 
@@ -9,16 +17,22 @@ export default function FilterPopover() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  const typeParam = searchParams.get('type');
   const statusParam = searchParams.get('status');
   const priorityParam = searchParams.get('priority');
 
   const [isOpen, setIsOpen] = useState(false);
+  const [types, setTypes] = useState<TaskType[]>(typeParam ? typeParam.split(',').filter(isTaskTypeValue) : []);
   const [statuses, setStatuses] = useState<TaskStatus[]>(
     statusParam ? statusParam.split(',').filter(isTaskStatus) : []
   );
   const [priorities, setPriorities] = useState<TaskPriority[]>(
     priorityParam ? priorityParam.split(',').filter(isTaskPriority) : []
   );
+
+  function toggleType(value: TaskType) {
+    setTypes((prev) => (prev.includes(value) ? prev.filter((type) => type !== value) : [...prev, value]));
+  }
 
   function toggleStatus(value: TaskStatus) {
     setStatuses((prev) => (prev.includes(value) ? prev.filter((status) => status !== value) : [...prev, value]));
@@ -29,6 +43,12 @@ export default function FilterPopover() {
 
   function setFilter() {
     const params = new URLSearchParams(searchParams.toString());
+
+    if (types.length > 0) {
+      params.set('type', types.join(','));
+    } else {
+      params.delete('type');
+    }
 
     if (statuses.length > 0) {
       params.set('status', statuses.join(','));
@@ -49,8 +69,10 @@ export default function FilterPopover() {
   function handleClear() {
     const params = new URLSearchParams(searchParams.toString());
 
+    setTypes([]);
     setStatuses([]);
     setPriorities([]);
+    params.delete('type');
     params.delete('status');
     params.delete('priority');
 
@@ -75,13 +97,15 @@ export default function FilterPopover() {
               閉じる
             </button>
           </div>
-           <div className="mb-4">
+          <div className="mb-4">
             <p className="mb-2 text-sm font-semibold">分類</p>
 
             <div className="flex  gap-8 text-sm">
               <label className="flex  items-center gap-2">
                 <input
                   type="checkbox"
+                  checked={types.includes(TASK_TYPE_VALUES.NORMAL)}
+                  onChange={() => toggleType(TASK_TYPE_VALUES.NORMAL)}
                 />
                 期限
               </label>
@@ -89,12 +113,13 @@ export default function FilterPopover() {
               <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
+                  checked={types.includes(TASK_TYPE_VALUES.SPOT)}
+                  onChange={() => toggleType(TASK_TYPE_VALUES.SPOT)}
                 />
                 スポット
               </label>
             </div>
           </div>
-
 
           <div className="mb-4">
             <p className="mb-2 text-sm font-semibold">進行状況</p>

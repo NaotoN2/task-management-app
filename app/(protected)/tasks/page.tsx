@@ -4,19 +4,20 @@ import EditTaskButton from './EditTaskButton';
 import type { Task } from '@/app/types/task';
 import FilterPopover from './FilterPopover';
 import SortPopover from './SortPopover';
-import { isSortValue, isTaskPriority, isTaskStatus, SORT_VALUES, type SortValue } from './constants';
+import { isSortValue, isTaskPriority, isTaskStatus, isTaskTypeValue, SORT_VALUES, type SortValue } from './constants';
 import SearchForm from './SearchForm';
 
 const STATUS_LABELS: Record<Task['status'], string> = { todo: '未着手', in_progress: '進行中', done: '完了' };
 const PRIORITY_LABELS: Record<Task['priority'], string> = { low: '低', medium: '中', high: '高' };
 
 type TaskPageProps = {
-  searchParams: Promise<{ sort?: string; status?: string; priority?: string; q?: string }>;
+  searchParams: Promise<{ sort?: string; type?: string; status?: string; priority?: string; q?: string }>;
 };
 
 export default async function TasksPage({ searchParams }: TaskPageProps) {
-  const { sort, status, priority, q } = await searchParams;
+  const { sort, type, status, priority, q } = await searchParams;
   const normalizedSort: SortValue = isSortValue(sort) ? sort : SORT_VALUES.DEFAULT;
+  const normalizedTypeValues = type ? type.split(',').filter(isTaskTypeValue) : [];
   const normalizedStatusValues = status ? status.split(',').filter(isTaskStatus) : [];
   const normalizedPriorityValues = priority ? priority.split(',').filter(isTaskPriority) : [];
   const normalizedQuery = typeof q === 'string' ? q.trim() : '';
@@ -36,6 +37,16 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
     .select('id, title, spot_task ,task_date, status, priority, memo')
     .eq('user_id', user.id);
 
+  if (normalizedTypeValues.length === 1) {
+    if (normalizedTypeValues.includes('normal')) {
+      query = query.eq('spot_task', false);
+    }
+
+    if (normalizedTypeValues.includes('spot')) {
+      query = query.eq('spot_task', true);
+    }
+  }
+
   if (normalizedStatusValues.length > 0) {
     query = query.in('status', normalizedStatusValues);
   }
@@ -49,13 +60,13 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
   }
 
   if (normalizedSort === SORT_VALUES.DATE_ASC) {
-    query = query.order('task_date', { ascending: true});
+    query = query.order('task_date', { ascending: true });
   } else if (normalizedSort === SORT_VALUES.DATE_DESC) {
-    query = query.order('task_date', { ascending: false});
+    query = query.order('task_date', { ascending: false });
   } else if (normalizedSort === SORT_VALUES.PRIORITY_DESC) {
-    query = query.order('priority', { ascending: false});
+    query = query.order('priority', { ascending: false });
   } else if (normalizedSort === SORT_VALUES.PRIORITY_ASC) {
-    query = query.order('priority', { ascending: true});
+    query = query.order('priority', { ascending: true });
   } else {
     query = query.order('id', { ascending: true });
   }

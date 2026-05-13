@@ -34,3 +34,14 @@ export const PRIORITY_VALUES = {
 export function isTaskPriority(value: string): value is TaskPriority {
   return Object.values(PRIORITY_VALUES).includes(value as TaskPriority);
 }
+
+export const TASK_TYPE_VALUES = {
+ NORMAL: 'normal',
+ SPOT:'spot'
+} as const;
+
+export type TaskType = (typeof TASK_TYPE_VALUES)[keyof typeof TASK_TYPE_VALUES];
+
+export function isTaskTypeValue(value: string): value is TaskType {
+  return Object.values(TASK_TYPE_VALUES).includes(value as TaskType);
+}
