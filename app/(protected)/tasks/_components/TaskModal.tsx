@@ -1,7 +1,7 @@
 'use client';
 
 import type { Task, TaskListItem } from '@/app/types/task';
-import { addTask, deleteTask, updateTask } from './actions';
+import { addTask, deleteTask, updateTask } from '../actions';
 import { useState } from 'react';
 
 type TaskModalProps = {

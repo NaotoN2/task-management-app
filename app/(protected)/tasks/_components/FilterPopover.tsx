@@ -1,17 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  isTaskPriority,
-  isTaskStatus,
-  isTaskTypeValue,
-  PRIORITY_VALUES,
-  STATUS_VALUES,
-  TASK_TYPE_VALUES,
-  type TaskType
-} from './constants';
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import type { TaskPriority, TaskStatus } from '@/app/types/task';
+import { type TaskType, isTaskTypeValue, isTaskStatus, isTaskPriority, TASK_TYPE_VALUES, STATUS_VALUES, PRIORITY_VALUES } from '../constants';
 
 export default function FilterPopover() {
   const router = useRouter();

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { isSortValue, SORT_VALUES, type SortValue } from './constants';
+import { isSortValue, SORT_VALUES, type SortValue } from '../constants';
 
 export default function SortPopover() {
   const router = useRouter();
