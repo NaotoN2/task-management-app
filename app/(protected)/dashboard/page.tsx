@@ -1,7 +1,8 @@
-import MiniCalendarPanel from './MiniCalendar';
-import SummaryCard from './SummaryCard';
-import TodayTasksPanel from './TodayTaskPanel';
-import UrgentTodayPanel from './UrgentAndTodayPanel';
+import MiniCalendarPanel from "./_components/MiniCalendar";
+import SummaryCard from "./_components/SummaryCard";
+import TodayTasksPanel from "./_components/TodayTaskPanel";
+import UrgentTodayPanel from "./_components/UrgentAndTodayPanel";
+
 
 export default function DashboardPage() {
   return (
