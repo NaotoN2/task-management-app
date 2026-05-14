@@ -1,15 +1,13 @@
 import { createClient } from '@/lib/supabase/server';
 
-import EditTaskButton from './EditTaskButton';
 import type { Task } from '@/app/types/task';
-
 
 import { isSortValue, isTaskPriority, isTaskStatus, isTaskTypeValue, SORT_VALUES, type SortValue } from './constants';
 import SearchForm from './_components/SearchForm';
 import FilterPopover from './_components/FilterPopover';
 import NewTaskButton from './_components/NewTaskButton';
 import SortPopover from './_components/SortPopover';
-
+import EditTaskButton from './_components/EditTaskButton';
 
 const STATUS_LABELS: Record<Task['status'], string> = { todo: '未着手', in_progress: '進行中', done: '完了' };
 const PRIORITY_LABELS: Record<Task['priority'], string> = { low: '低', medium: '中', high: '高' };
