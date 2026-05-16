@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import TaskCalendar from './_components/TaskCalendar';
 
 export default async function CalendarPage() {
   const supabase = await createClient();
@@ -15,7 +16,7 @@ export default async function CalendarPage() {
     .from('task')
     .select('id, title, spot_task, task_date, status, priority, memo')
     .eq('user_id', user.id)
-    .order('priority', { ascending: true });
+    .order('id', { ascending: true });
 
   if (error) {
     return <main className="p-6">タスクを取得できませんでした。</main>;
@@ -23,7 +24,7 @@ export default async function CalendarPage() {
 
   return (
     <main className="p-6">
-      カレンダー
+      <TaskCalendar tasks={tasks ?? []} />
     </main>
   );
 }
