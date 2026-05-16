@@ -37,40 +37,49 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
 
   return (
     <section>
-      <FullCalendar
-        plugins={[dayGridPlugin]}
-        initialView="dayGridMonth"
-        events={events}
-        height="auto"
-        dayMaxEvents={3}
-        eventContent={(eventInfo) => {
-          const priority = eventInfo.event.extendedProps.priority as Task['priority'];
+      <div className="overflow-x-auto">
+        <div className="calendar-page mx-auto max-w-[1200px] min-w-[900px]">
+          <FullCalendar
+            plugins={[dayGridPlugin]}
+            initialView="dayGridMonth"
+            events={events}
+            height="auto"
+            dayMaxEvents={3}
+            eventBackgroundColor="#475569"
+            eventBorderColor="#64748b"
+            eventTextColor="#ffffff"
+            eventContent={(eventInfo) => {
+              const priority = eventInfo.event.extendedProps.priority as Task['priority'];
 
-          const spotTask = eventInfo.event.extendedProps.spotTask as boolean;
+              const spotTask = eventInfo.event.extendedProps.spotTask as boolean;
 
-          return (
-            <div>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span>{PRIORITY_ICON[priority]}</span>
-                </TooltipTrigger>
+              return (
+                <div>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>{PRIORITY_ICON[priority]}</span>
+                    </TooltipTrigger>
 
-                <TooltipContent>{PRIORITY_LABELS[priority]}</TooltipContent>
-              </Tooltip>
+                    <TooltipContent>{PRIORITY_LABELS[priority]}</TooltipContent>
+                  </Tooltip>
 
-              <span className="truncate">{eventInfo.event.title}</span>
+                  <span title={eventInfo.event.title} className="inline-block max-w-[5em] truncate align-middle">
+                    {eventInfo.event.title}
+                  </span>
 
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <span>{spotTask ? '📍' : '⏰'}</span>
-                </TooltipTrigger>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <span>{spotTask ? '📍' : '⏰'}</span>
+                    </TooltipTrigger>
 
-                <TooltipContent>{spotTask ? 'スポット' : '期限'}</TooltipContent>
-              </Tooltip>
-            </div>
-          );
-        }}
-      />
+                    <TooltipContent>{spotTask ? 'スポット' : '期限'}</TooltipContent>
+                  </Tooltip>
+                </div>
+              );
+            }}
+          />
+        </div>
+      </div>
     </section>
   );
 }
