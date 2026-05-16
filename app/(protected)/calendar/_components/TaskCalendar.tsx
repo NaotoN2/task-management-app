@@ -5,9 +5,9 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 
-type CalenderTask = Pick<Task, 'id' | 'title' | 'spot_task' | 'task_date' | 'priority' | 'memo'>;
+type CalendarTask = Pick<Task, 'id' | 'title' | 'spot_task' | 'task_date' | 'priority' | 'memo'>;
 
-type TaskCalendarProps = { tasks: CalenderTask[] };
+type TaskCalendarProps = { tasks: CalendarTask[] };
 
 const PRIORITY_ICON: Record<Task['priority'], string> = {
   high: '🔴',
