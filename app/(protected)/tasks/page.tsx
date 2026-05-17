@@ -117,7 +117,11 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
                       {task.title}
                     </td>
                     <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
-                    <td className="border-b px-4 py-3">{task.task_date}</td>
+                    <td className="border-b px-4 py-3">
+                      {task.spot_task
+                        ? `${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日`
+                        : `${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日まで`}
+                    </td>
                     <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                     <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
                     <td className="border-b px-4 py-3">{task.memo ? <MemoPopover memo={task.memo} /> : '-'}</td>
