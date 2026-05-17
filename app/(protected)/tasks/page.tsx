@@ -8,6 +8,7 @@ import FilterPopover from './_components/FilterPopover';
 import NewTaskButton from './_components/NewTaskButton';
 import SortPopover from './_components/SortPopover';
 import EditTaskButton from './_components/EditTaskButton';
+import MemoPopover from '@/components/shared/MemoPopover';
 
 const STATUS_LABELS: Record<Task['status'], string> = { todo: '未着手', in_progress: '進行中', done: '完了' };
 const PRIORITY_LABELS: Record<Task['priority'], string> = { low: '低', medium: '中', high: '高' };
@@ -81,48 +82,52 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   return (
     <main className="p-6">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">タスク一覧</h1>
-        <div className="flex items-center gap-2">
-          <SearchForm />
+      <div className="overflow-x-auto">
+        <div className="mx-auto max-w-[1200px] min-w-[1000px]">
+          <div className="mb-6 flex items-center justify-between">
+            <h1 className="text-2xl font-bold">タスク一覧</h1>
+            <div className="flex items-center gap-2">
+              <SearchForm />
 
-          <SortPopover />
+              <SortPopover />
 
-          <FilterPopover />
+              <FilterPopover />
 
-          <NewTaskButton />
+              <NewTaskButton />
+            </div>
+          </div>
+
+          <div className="overflow-x-auto rounded-lg border">
+            <table className="min-w-full border-collapse">
+              <thead className="bg-gray-100">
+                <tr>
+                  <th className="border-b px-4 py-3 text-left">項目名</th>
+                  <th className="border-b px-4 py-3 text-left">分類</th>
+                  <th className="border-b px-4 py-3 text-left">日付・期限</th>
+                  <th className="border-b px-4 py-3 text-left">状況</th>
+                  <th className="border-b px-4 py-3 text-left">重要度</th>
+                  <th className="border-b px-4 py-3 text-left">メモ</th>
+                  <th className="border-b px-4 py-3 text-left">変更</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tasks?.map((task) => (
+                  <tr key={task.id} className="hover:bg-gray-50">
+                    <td className="border-b px-4 py-3">{task.title}</td>
+                    <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
+                    <td className="border-b px-4 py-3">{task.task_date}</td>
+                    <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
+                    <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
+                    <td className="border-b px-4 py-3">{task.memo ? <MemoPopover memo={task.memo} /> : '-'}</td>
+                    <td className="border-b px-4 py-3">
+                      <EditTaskButton task={task} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-
-      <div className="overflow-x-auto rounded-lg border">
-        <table className="min-w-full border-collapse">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="border-b px-4 py-3 text-left">項目名</th>
-              <th className="border-b px-4 py-3 text-left">分類</th>
-              <th className="border-b px-4 py-3 text-left">日付</th>
-              <th className="border-b px-4 py-3 text-left">状況</th>
-              <th className="border-b px-4 py-3 text-left">重要度</th>
-              <th className="border-b px-4 py-3 text-left">メモ</th>
-              <th className="border-b px-4 py-3 text-left">変更</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks?.map((task) => (
-              <tr key={task.id} className="hover:bg-gray-50">
-                <td className="border-b px-4 py-3">{task.title}</td>
-                <td className="border-b px-4 py-3">{task.spot_task ? 'スポット' : '期限'}</td>
-                <td className="border-b px-4 py-3">{task.task_date}</td>
-                <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
-                <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
-                <td className="border-b px-4 py-3">{task.memo ?? '-'}</td>
-                <td className="border-b px-4 py-3">
-                  <EditTaskButton task={task} />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
       </div>
     </main>
   );

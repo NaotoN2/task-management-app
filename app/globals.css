@@ -46,6 +46,10 @@
   font-weight: 700;
 }
 
+.calendar-page .fc .fc-daygrid-day-frame {
+  height: 120px;
+}
+
 @theme inline {
   --font-heading: var(--font-sans);
   --font-sans: var(--font-sans);
