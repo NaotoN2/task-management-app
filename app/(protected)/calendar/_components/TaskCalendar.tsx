@@ -4,6 +4,7 @@ import { Task } from '@/app/types/task';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import MemoPopover from '@/components/shared/MemoPopover';
 
 type CalendarTask = Pick<Task, 'id' | 'title' | 'spot_task' | 'task_date' | 'priority' | 'memo'>;
 
@@ -53,6 +54,8 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
 
               const spotTask = eventInfo.event.extendedProps.spotTask as boolean;
 
+              const memo = eventInfo.event.extendedProps.memo as string | null;
+
               return (
                 <div>
                   <Tooltip>
@@ -74,6 +77,8 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
 
                     <TooltipContent>{spotTask ? 'スポット' : '期限'}</TooltipContent>
                   </Tooltip>
+
+                  {memo && <MemoPopover memo={memo} />}
                 </div>
               );
             }}
