@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from '@/components/ui/popover';
+import { NotebookText } from 'lucide-react';
 
 type MemoPopoverProps = {
   memo: string;
@@ -18,7 +19,7 @@ export default function MemoPopover({ memo }: MemoPopoverProps) {
               type="button"
               className="cursor-pointer items-center rounded  text-xs hover:bg-slate-100"
             >
-              📝
+              <NotebookText  className='h-5 w-5' strokeWidth={1.5}/>
             </button>
           </PopoverTrigger>
       <PopoverContent className="w-48 text-sm">

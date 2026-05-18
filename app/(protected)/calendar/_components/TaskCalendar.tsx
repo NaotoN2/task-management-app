@@ -5,15 +5,17 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import MemoPopover from '@/components/shared/MemoPopover';
+import { AlarmClock, Circle, Pin } from 'lucide-react';
+import { ReactNode } from 'react';
 
 type CalendarTask = Pick<Task, 'id' | 'title' | 'spot_task' | 'task_date' | 'priority' | 'memo'>;
 
 type TaskCalendarProps = { tasks: CalendarTask[] };
 
-const PRIORITY_ICON: Record<Task['priority'], string> = {
-  high: '🔴',
-  medium: '🟡',
-  low: '🔵'
+const PRIORITY_ICON: Record<Task['priority'], ReactNode> = {
+  high: <Circle className="h-3 w-3 fill-red-500" strokeWidth={1.0} />,
+  medium: <Circle className="h-3 w-3  fill-yellow-400" strokeWidth={1.0} />,
+  low: <Circle className="h-3 w-3  fill-green-500" strokeWidth={1.0} />
 };
 
 const PRIORITY_LABELS: Record<Task['priority'], string> = {
@@ -46,9 +48,9 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
             events={events}
             height="auto"
             dayMaxEvents={3}
-            eventBackgroundColor="#475569"
-            eventBorderColor="#64748b"
-            eventTextColor="#ffffff"
+            eventBackgroundColor="#fcfcfc"
+            eventBorderColor="#3b3d54"
+            eventTextColor="#2c3966"
             eventContent={(eventInfo) => {
               const priority = eventInfo.event.extendedProps.priority as Task['priority'];
 
@@ -57,7 +59,7 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
               const memo = eventInfo.event.extendedProps.memo as string | null;
 
               return (
-                <div>
+                <div className="ml-1 flex items-center gap-2 ">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span>{PRIORITY_ICON[priority]}</span>
@@ -72,7 +74,13 @@ export default function TaskCalendar({ tasks }: TaskCalendarProps) {
 
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <span>{spotTask ? '📍' : '⏰'}</span>
+                      <span>
+                        {spotTask ? (
+                          <Pin className="h-4 w-4 fill-gray-400 " strokeWidth={1.5} />
+                        ) : (
+                          <AlarmClock className="h-4 w-4" strokeWidth={1.5} />
+                        )}
+                      </span>
                     </TooltipTrigger>
 
                     <TooltipContent>{spotTask ? 'スポット' : '期限'}</TooltipContent>

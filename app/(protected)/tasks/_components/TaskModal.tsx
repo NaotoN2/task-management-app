@@ -3,6 +3,7 @@
 import type { Task, TaskListItem } from '@/app/types/task';
 import { addTask, deleteTask, updateTask } from '../actions';
 import { useState } from 'react';
+import { Trash2 } from 'lucide-react';
 
 type TaskModalProps = {
   mode: 'create' | 'edit';
@@ -179,8 +180,8 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           {isEditMode && task ? (
             <form action={handleDelete}>
               <input type="hidden" name="taskId" value={task.id} />
-              <button type="submit" className="cursor-pointer rounded-md border border-red-500 px-4 py-2 text-red-600">
-                項目を削除
+              <button type="submit" className="cursor-pointer rounded-md border-2 border-red-500 px-3 py-2">
+                <Trash2  className='text-red-600' strokeWidth={1.5}/>
               </button>
             </form>
           ) : null}
