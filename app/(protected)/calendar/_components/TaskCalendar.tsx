@@ -19,9 +19,9 @@ const PRIORITY_ICON: Record<Task['priority'], ReactNode> = {
 };
 
 const PRIORITY_LABELS: Record<Task['priority'], string> = {
-  high: '優先度：高',
-  medium: '優先度：中',
-  low: '優先度：低'
+  high: '重要度：高',
+  medium: '重要度：中',
+  low: '重要度：低'
 };
 
 export default function TaskCalendar({ tasks }: TaskCalendarProps) {

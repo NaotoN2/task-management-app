@@ -1,10 +1,10 @@
-import MiniCalendarPanel from "./_components/MiniCalendar";
-import SummaryCard from "./_components/SummaryCard";
-import TodayTasksPanel from "./_components/TodayTaskPanel";
-import UrgentTodayPanel from "./_components/UrgentAndTodayPanel";
+import MiniCalendar from './_components/MiniCalendar';
+import MiniCalendarContainer from './_components/MiniCalendarContainer';
+import SummaryCard from './_components/SummaryCard';
+import TodayTasksPanel from './_components/TodayTaskPanel';
+import UrgentAndOverduePanel from './_components/UrgentAndOverduePanel';
 
-
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return (
     <main className="mx-auto w-full max-w-6xl p-6">
       <div className="mb-6">
@@ -21,8 +21,8 @@ export default function DashboardPage() {
         <TodayTasksPanel />
 
         <div className="flex flex-col gap-4">
-          <UrgentTodayPanel />
-          <MiniCalendarPanel />
+          <UrgentAndOverduePanel />
+          <MiniCalendarContainer />
         </div>
       </section>
     </main>

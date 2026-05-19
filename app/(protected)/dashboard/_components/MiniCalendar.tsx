@@ -3,8 +3,24 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Link from 'next/link';
+import { Task } from '@/app/types/task';
+import { AlarmClock, Pin } from 'lucide-react';
 
-export default function MiniCalendarPanel() {
+type MiniCalendarTask = Pick<Task, 'spot_task' | 'task_date'>;
+
+type MiniCalendarPanelProps = {
+  tasks: MiniCalendarTask[];
+};
+
+export default function MiniCalendar({ tasks }: MiniCalendarPanelProps) {
+  const events = tasks.map((task) => ({
+    start: task.task_date,
+    allDay: true,
+    extendedProps: {
+      spotTask: task.spot_task
+    }
+  }));
+
   return (
     <section className="rounded-lg border p-4">
       <div className="pb-4 flex justify-end ">
@@ -20,6 +36,10 @@ export default function MiniCalendarPanel() {
           height="auto"
           fixedWeekCount={false}
           showNonCurrentDates={false}
+          events={events}
+          eventContent={(info) =>
+            info.event.extendedProps.spotTask ? <Pin className="h-3 w-3" /> : <AlarmClock className="h-3 w-3" />
+          }
         />
       </div>
     </section>
