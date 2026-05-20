@@ -8,9 +8,29 @@
   font-size: 0.6rem;
 }
 
+.mini-calendar .fc-daygrid-day-frame {
+  min-height: 60px;
+}
+
 .mini-calendar .fc-daygrid-day-number {
   margin-right: auto !important;
   padding: 2px 0 0 2px;
+}
+
+.mini-calendar .fc-daygrid-event {
+  height: 6px;
+  width: 32px;
+  margin: 2px auto;
+}
+
+.mini-calendar .fc-daygrid-event-harness {
+  display: flex;
+  justify-content: center;
+}
+
+.mini-calendar .fc-daygrid-more-link {
+  pointer-events: none;
+  cursor: default;
 }
 
 .calendar-page .fc-theme-standard td {

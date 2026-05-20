@@ -36,10 +36,11 @@ export default function MiniCalendar({ tasks }: MiniCalendarPanelProps) {
           height="auto"
           fixedWeekCount={false}
           showNonCurrentDates={false}
+          dayMaxEvents={2}
           events={events}
-          eventContent={(info) =>
-            info.event.extendedProps.spotTask ? <Pin className="h-3 w-3" /> : <AlarmClock className="h-3 w-3" />
-          }
+          eventBackgroundColor="#6dbcfc"
+          eventBorderColor="#3b3d54"
+          eventTextColor="#2c3966"
         />
       </div>
     </section>
