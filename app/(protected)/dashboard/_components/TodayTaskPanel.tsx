@@ -38,7 +38,7 @@ export default async function TodayTasksPanel() {
   return (
     <section className="rounded-lg border p-4">
       <div className="flex justify-between">
-        <h2 className="mb-4 text-lg ">今日のタスク</h2>
+        <h2 className="mb-4 text-lg ">今日やること</h2>
         <Link href="/tasks" className="text-sm hover:underline">
           {' '}
           タスク一覧 ⇒

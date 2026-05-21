@@ -1,6 +1,7 @@
 import MiniCalendar from './_components/MiniCalendar';
 import MiniCalendarContainer from './_components/MiniCalendarContainer';
 import SummaryCard from './_components/SummaryCard';
+import SummaryCardsContainer from './_components/SummaryCardsContainer';
 import TodayTasksPanel from './_components/TodayTaskPanel';
 import UrgentAndOverduePanel from './_components/UrgentAndOverduePanel';
 
@@ -11,11 +12,9 @@ export default async function DashboardPage() {
         <h1 className="text-2xl">Dashboard</h1>
       </div>
 
-      <section className="mb-6 grid grid-cols-3 gap-4">
-        <SummaryCard title="完了タスク" />
-        <SummaryCard title="残りのタスク" />
-        <SummaryCard title="期限超過" />
-      </section>
+      
+      <SummaryCardsContainer/>
+   
 
       <section className="grid grid-cols-[2fr_1fr] gap-4">
         <TodayTasksPanel />
