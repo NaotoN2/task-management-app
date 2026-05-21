@@ -1,9 +1,9 @@
-import { type Task } from '@/app/types/task';
+import { type TaskPriority } from '@/app/types/task';
 import { createClient } from '@/lib/supabase/server';
 import { AlarmClock, Pin } from 'lucide-react';
 import Link from 'next/link';
 
-const PRIORITY_LABELS: Record<Task['priority'], string> = { low: '低', medium: '中', high: '高' };
+const PRIORITY_LABELS: Record<TaskPriority, string> = { low: '低', medium: '中', high: '高' };
 
 function getTodayString() {
   return new Intl.DateTimeFormat('sv-SE', {
