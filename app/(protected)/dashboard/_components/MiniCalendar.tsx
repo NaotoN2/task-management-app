@@ -4,7 +4,6 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import Link from 'next/link';
 import { Task } from '@/app/types/task';
-import { AlarmClock, Pin } from 'lucide-react';
 
 type MiniCalendarTask = Pick<Task, 'spot_task' | 'task_date'>;
 

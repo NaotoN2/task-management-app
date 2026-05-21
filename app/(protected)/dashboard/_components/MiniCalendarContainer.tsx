@@ -14,6 +14,7 @@ export default async function MiniCalendarContainer() {
   const { data: tasks, error } = await supabase.from('task').select('spot_task,task_date').eq('user_id', user.id);
 
   if (error) {
+    console.error(error);
     return <div>データの取得に失敗しました</div>;
   }
 
