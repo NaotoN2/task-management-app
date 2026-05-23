@@ -1,6 +1,4 @@
-import MiniCalendar from './_components/MiniCalendar';
 import MiniCalendarContainer from './_components/MiniCalendarContainer';
-import SummaryCard from './_components/SummaryCard';
 import SummaryCardsContainer from './_components/SummaryCardsContainer';
 import TodayTasksPanel from './_components/TodayTaskPanel';
 import UrgentAndOverduePanel from './_components/UrgentAndOverduePanel';
@@ -9,7 +7,7 @@ export default async function DashboardPage() {
   return (
     <main className="mx-auto w-full max-w-6xl p-6">
       <div className="mb-6">
-        <h1 className="text-2xl">Dashboard</h1>
+        <h1 className="text-2xl font-bold">ダッシュボード</h1>
       </div>
 
       
