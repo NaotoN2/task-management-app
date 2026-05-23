@@ -1,6 +1,7 @@
 'use server';
 
 import { NewTask, Task, UpdatedTask } from '@/app/types/task';
+import { getTodayString } from '@/lib/date';
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
@@ -13,12 +14,6 @@ async function getActionContext() {
     data: { user }
   } = await supabase.auth.getUser();
   return { supabase, user };
-}
-
-function getTodayString() {
-  return new Date().toLocaleDateString('sv-SE', {
-    timeZone: 'Asia/Tokyo'
-  });
 }
 
 function resolveTaskStatus({

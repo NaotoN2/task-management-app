@@ -1,11 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import SummaryCard from './SummaryCard';
+import { getTodayString } from '@/lib/date';
 
-function getTodayString() {
-  return new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Asia/Tokyo'
-  }).format(new Date());
-}
+
 
 export default async function SummaryCardsContainer() {
   const supabase = await createClient();
