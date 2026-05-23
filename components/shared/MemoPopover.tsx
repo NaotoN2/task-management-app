@@ -1,10 +1,6 @@
-'use client'
+'use client';
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger
-} from '@/components/ui/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { NotebookText } from 'lucide-react';
 
 type MemoPopoverProps = {
@@ -14,15 +10,12 @@ type MemoPopoverProps = {
 export default function MemoPopover({ memo }: MemoPopoverProps) {
   return (
     <Popover>
-          <PopoverTrigger asChild>
-            <button
-              type="button"
-              className="cursor-pointer items-center rounded  text-xs hover:bg-slate-100"
-            >
-              <NotebookText  className='h-5 w-5' strokeWidth={1.5}/>
-            </button>
-          </PopoverTrigger>
-      <PopoverContent className="w-48 text-sm">
+      <PopoverTrigger asChild>
+        <button type="button" className="cursor-pointer items-center rounded  text-xs hover:bg-slate-100">
+          <NotebookText className="h-5 w-5" strokeWidth={1.5} />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent side="top" align="start" alignOffset={-30} className="w-48 text-sm">
         <p className="whitespace-pre-wrap">{memo}</p>
       </PopoverContent>
     </Popover>
