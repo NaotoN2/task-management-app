@@ -1,4 +1,5 @@
 import { type TaskPriority } from '@/app/types/task';
+import { getTodayString } from '@/lib/date';
 import { createClient } from '@/lib/supabase/server';
 import { AlarmClock, Pin } from 'lucide-react';
 
@@ -21,7 +22,7 @@ export default async function UrgentAndOverduePanel() {
     return <div>ユーザーの取得に失敗しました。</div>;
   }
 
-  const today = new Date();
+  const today = getTodayString();
 
   const limitDate = new Date(today);
   limitDate.setDate(limitDate.getDate() + 2);
