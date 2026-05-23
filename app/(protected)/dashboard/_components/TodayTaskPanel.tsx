@@ -6,8 +6,6 @@ import Link from 'next/link';
 
 const PRIORITY_LABELS: Record<TaskPriority, string> = { low: '低', medium: '中', high: '高' };
 
-
-
 export default async function TodayTasksPanel() {
   const supabase = await createClient();
 
@@ -33,41 +31,43 @@ export default async function TodayTasksPanel() {
   }
 
   return (
-    <section className="rounded-lg border p-4">
+    <section className="flex max-h-[816px] flex-col  rounded-lg border p-4">
       <div className="flex justify-between">
-        <h2 className="mb-4 text-lg ">今日やること</h2>
+        <h2 className="mb-4 text-lg">今日やること</h2>
         <Link href="/tasks" className="text-sm hover:underline">
           {' '}
           タスク一覧 ⇒
         </Link>
       </div>
-      <div className="flex flex-col gap-2">
-        {tasks.map((task) => (
-          <div key={task.id} className="rounded-md border px-4 py-3">
-            <div className="text-lg font-semibold">{task.title}</div>
-            <div className="mt-1 flex items-center gap-3 text-sm">
-              <span>{`重要度：${PRIORITY_LABELS[task.priority]}`}</span>
-              <span className="flex items-center gap-2">
-                {task.spot_task ? (
-                  <>
-                    <Pin className="h-5 w-5" />
-                    スポット - 今日
-                  </>
-                ) : (
-                  <>
-                    <AlarmClock className="h-5 w-5" />
-                    期限
-                  </>
-                )}
-              </span>
-              <span>
-                {!task.spot_task &&
-                  `~ ${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日`}
-              </span>
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="flex flex-col gap-2">
+          {tasks.map((task) => (
+            <div key={task.id} className="rounded-md border px-4 py-3">
+              <div className="text-lg font-semibold">{task.title}</div>
+              <div className="mt-1 flex items-center gap-3 text-sm">
+                <span>{`重要度：${PRIORITY_LABELS[task.priority]}`}</span>
+                <span className="flex items-center gap-2">
+                  {task.spot_task ? (
+                    <>
+                      <Pin className="h-5 w-5" />
+                      スポット - 今日
+                    </>
+                  ) : (
+                    <>
+                      <AlarmClock className="h-5 w-5" />
+                      期限
+                    </>
+                  )}
+                </span>
+                <span>
+                  {!task.spot_task &&
+                    `~ ${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日`}
+                </span>
+              </div>
+              <div className="mt-2 min-h-5 text-sm text-gray-500">{task.memo}</div>
             </div>
-            <div className="mt-2 min-h-5 text-sm text-gray-500">{task.memo}</div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

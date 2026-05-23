@@ -10,11 +10,9 @@ export default async function DashboardPage() {
         <h1 className="text-2xl font-bold">ダッシュボード</h1>
       </div>
 
-      
-      <SummaryCardsContainer/>
-   
+      <SummaryCardsContainer />
 
-      <section className="grid grid-cols-[2fr_1fr] gap-4">
+      <section className="grid grid-cols-[2fr_1fr] items-stretch gap-4">
         <TodayTasksPanel />
 
         <div className="flex flex-col gap-4">

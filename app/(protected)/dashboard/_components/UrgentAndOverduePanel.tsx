@@ -56,33 +56,35 @@ export default async function UrgentAndOverduePanel() {
   });
 
   return (
-    <section className="h-90 rounded-lg border p-4">
-      <div className="flex flex-col gap-2">
-        <h2 className="my-1">緊急・期限切れ</h2>
-        {sortedTasks.map((task) => (
-          <div key={task.id} className="rounded-md border px-4 py-2">
-            <div className="font-semibold">{task.title}</div>
-            <div className="mt-1 flex items-center gap-3 text-sm">
-              <span>{`重要度：${PRIORITY_LABELS[task.priority]}`}</span>
-              <span className="flex items-center gap-2">
-                {task.spot_task ? (
-                  <>
-                    <Pin className="h-5 w-5" />
-                    スポット - 今日
-                  </>
-                ) : (
-                  <>
-                    <AlarmClock className="h-5 w-5" />
-                  </>
-                )}
-              </span>
-              <span>
-                {!task.spot_task &&
-                  `~ ${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日`}
-              </span>
+    <section className="flex h-80  flex-col rounded-lg border p-4">
+      <h2 className="my-1">緊急・期限切れ</h2>
+      <div className="flex-1 overflow-y-auto">
+        <div className="flex flex-col gap-2">
+          {sortedTasks.map((task) => (
+            <div key={task.id} className="rounded-md border px-4 py-2">
+              <div className="font-semibold">{task.title}</div>
+              <div className="mt-1 flex items-center gap-3 text-sm">
+                <span>{`重要度：${PRIORITY_LABELS[task.priority]}`}</span>
+                <span className="flex items-center gap-2">
+                  {task.spot_task ? (
+                    <>
+                      <Pin className="h-5 w-5" />
+                      スポット - 今日
+                    </>
+                  ) : (
+                    <>
+                      <AlarmClock className="h-5 w-5" />
+                    </>
+                  )}
+                </span>
+                <span>
+                  {!task.spot_task &&
+                    `~ ${Number(task.task_date.split('-')[1])}月${Number(task.task_date.split('-')[2])}日`}
+                </span>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
