@@ -12,7 +12,7 @@ export default function ProtectedLayout({ children }: { children: ReactNode }) {
       <div className="min-h-screen">
         <header className="h-24 flex items-center justify-between px-4 border-b">
           <div className="flex flex-col">
-            <div className="my-2 flex items-center">
+            <div className="my-2 flex items-center gap-1">
               <LayoutDashboard className="h-8 w-8" />
               <div className="text-2xl font-semibold">Task Manager</div>
             </div>
