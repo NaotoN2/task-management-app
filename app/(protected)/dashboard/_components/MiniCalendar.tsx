@@ -21,13 +21,13 @@ export default function MiniCalendar({ tasks }: MiniCalendarPanelProps) {
   }));
 
   return (
-    <section className="flex h-[480px] flex-col rounded-lg border p-4">
+    <section className="flex h-[480px] flex-col rounded-lg border p-4 bg-slate-50">
       <div className="pb-4 flex justify-end ">
         <Link href="/calendar" className="text-sm hover:underline">
           カレンダー ⇒
         </Link>
       </div>
-      <div className="mini-calendar min-h-0 flex-1">
+      <div className="mini-calendar min-h-0 flex-1 bg-white">
         <FullCalendar
           plugins={[dayGridPlugin]}
           initialView="dayGridMonth"

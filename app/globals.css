@@ -8,6 +8,11 @@
   font-size: 0.6rem;
 }
 
+.mini-calendar .fc .fc-daygrid-day.fc-day-today {
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 1px  #fc7958;
+}
+
 .mini-calendar .fc-daygrid-day-frame {
   min-height: 60px;
 }
@@ -32,6 +37,8 @@
   pointer-events: none;
   cursor: default;
 }
+
+
 
 .calendar-page .fc-theme-standard td {
   background-color: #f8fafc;

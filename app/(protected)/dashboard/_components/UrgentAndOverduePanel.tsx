@@ -56,12 +56,12 @@ export default async function UrgentAndOverduePanel() {
   });
 
   return (
-    <section className="flex h-80  flex-col rounded-lg border p-4">
+    <section className="flex h-80  flex-col rounded-lg border p-4 bg-yellow-50">
       <h2 className="my-1">緊急・期限切れ</h2>
       <div className="flex-1 overflow-y-auto">
         <div className="flex flex-col gap-2">
           {sortedTasks.map((task) => (
-            <div key={task.id} className="rounded-md border px-4 py-2">
+            <div key={task.id} className="rounded-md border px-4 py-2 bg-white">
               <div className="font-semibold">{task.title}</div>
               <div className="mt-1 flex items-center gap-3 text-sm">
                 <span>{`重要度：${PRIORITY_LABELS[task.priority]}`}</span>
