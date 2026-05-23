@@ -23,10 +23,6 @@ export default async function UrgentAndOverduePanel() {
 
   const today = new Date();
 
-  const todayText = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Asia/Tokyo'
-  }).format(today);
-
   const limitDate = new Date(today);
   limitDate.setDate(limitDate.getDate() + 2);
 
