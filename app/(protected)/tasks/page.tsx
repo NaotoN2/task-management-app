@@ -37,7 +37,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   let query = supabase
     .from('task')
-    .select('id, title, spot_task ,task_date, status, priority, memo')
+    .select('id, title, spot_task ,task_date, status, priority, memo,remind_at')
     .eq('user_id', user.id);
 
   if (normalizedTypeValues.length === 1) {

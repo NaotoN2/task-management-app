@@ -45,6 +45,8 @@ export type Database = {
           id: number
           memo: string | null
           priority: Database["public"]["Enums"]["task_priority"]
+          remind_at: string | null
+          reminded_at: string | null
           spot_task: boolean
           status: Database["public"]["Enums"]["task_status"]
           task_date: string
@@ -57,6 +59,8 @@ export type Database = {
           id?: number
           memo?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          remind_at?: string | null
+          reminded_at?: string | null
           spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
           task_date: string
@@ -69,6 +73,8 @@ export type Database = {
           id?: number
           memo?: string | null
           priority?: Database["public"]["Enums"]["task_priority"]
+          remind_at?: string | null
+          reminded_at?: string | null
           spot_task?: boolean
           status?: Database["public"]["Enums"]["task_status"]
           task_date?: string

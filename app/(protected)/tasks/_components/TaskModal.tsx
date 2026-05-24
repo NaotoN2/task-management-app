@@ -4,6 +4,7 @@ import type { Task, TaskListItem } from '@/app/types/task';
 import { addTask, deleteTask, updateTask } from '../actions';
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
+import { formatDateTimeLocal } from '@/lib/date';
 
 type TaskModalProps = {
   mode: 'create' | 'edit';
@@ -166,6 +167,16 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           </div>
 
           <div>
+            <label className="mb-1 block text-sm font-medium">リマインド通知日時（任意）</label>
+            <input
+              type="datetime-local"
+              name="remind_at"
+              defaultValue={formatDateTimeLocal(task?.remind_at)}
+              className="w-full rounded-md border px-3 py-2"
+            />
+          </div>
+
+          <div>
             <label className="mb-1 block text-sm font-medium">メモ</label>
             <textarea
               name="memo"
@@ -181,7 +192,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
             <form action={handleDelete}>
               <input type="hidden" name="taskId" value={task.id} />
               <button type="submit" className="cursor-pointer rounded-md border-2 border-red-500 px-3 py-2">
-                <Trash2  className='text-red-600' strokeWidth={1.5}/>
+                <Trash2 className="text-red-600" strokeWidth={1.5} />
               </button>
             </form>
           ) : null}

@@ -49,6 +49,7 @@ export async function addTask(formData: FormData) {
   const priority = formData.get('priority');
   const taskDate = formData.get('task_date');
   const memo = formData.get('memo');
+  const remind_at = formData.get('remind_at');
 
   if (typeof title !== 'string' || title.trim() === '') {
     return;
@@ -80,6 +81,12 @@ export async function addTask(formData: FormData) {
     memoText = memo.trim();
   }
 
+  let remindAt: string | null = null;
+
+  if (typeof remind_at === 'string' && remind_at.trim() !== '') {
+    remindAt = new Date(remind_at).toISOString();
+  }
+
   const taskStatus = resolveTaskStatus({
     spotTask,
     taskDate,
@@ -93,6 +100,7 @@ export async function addTask(formData: FormData) {
     priority: taskPriority,
     task_date: taskDate,
     memo: memoText,
+    remind_at: remindAt,
     user_id: user.id
   };
 
@@ -166,6 +174,7 @@ export async function updateTask(formData: FormData) {
   const priority = formData.get('priority');
   const taskDate = formData.get('task_date');
   const memo = formData.get('memo');
+  const remind_at = formData.get('remind_at');
 
   if (typeof title !== 'string' || title.trim() === '') {
     return;
@@ -197,6 +206,12 @@ export async function updateTask(formData: FormData) {
     memoText = memo.trim();
   }
 
+  let remindAt: string | null = null;
+
+  if (typeof remind_at === 'string' && remind_at.trim() !== '') {
+    remindAt = new Date(remind_at).toISOString();
+  }
+
   const taskStatus = resolveTaskStatus({
     spotTask,
     taskDate,
@@ -209,7 +224,8 @@ export async function updateTask(formData: FormData) {
     status: taskStatus,
     priority: taskPriority,
     task_date: taskDate,
-    memo: memoText
+    memo: memoText,
+    remind_at: remindAt
   };
 
   const { error } = await supabase.from('task').update(updatedTask).eq('id', taskIdNumber).eq('user_id', user.id);
