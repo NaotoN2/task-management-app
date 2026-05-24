@@ -1,12 +1,20 @@
 import { ReactNode } from 'react';
 import SidebarNav from './SidebarNav';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { LayoutDashboard } from 'lucide-react';
+import { LayoutDashboard, LogOut } from 'lucide-react';
 import { getTodayLabel } from '@/lib/date';
+import Image from 'next/image';
+import { createClient } from '@/lib/supabase/server';
 
 const today = getTodayLabel();
 
-export default function ProtectedLayout({ children }: { children: ReactNode }) {
+export default async function ProtectedLayout({ children }: { children: ReactNode }) {
+  const supabase = await createClient();
+
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
   return (
     <TooltipProvider>
       <div className="min-h-screen">
@@ -19,11 +27,29 @@ export default function ProtectedLayout({ children }: { children: ReactNode }) {
             <p className="text-gray-600">{today}</p>
           </div>
 
-          <form action="/auth/logout" method="post">
-            <button className="cursor-pointer" type="submit">
-              ログアウト
-            </button>
-          </form>
+          <div className="flex items-center">
+            <div className="mr-10 flex items-center gap-2">
+              <div>
+                {user?.user_metadata.avatar_url && (
+                  <Image
+                    src={user.user_metadata.avatar_url}
+                    alt="profile"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                )}
+              </div>
+              <span>{user?.user_metadata.full_name}</span>
+            </div>
+
+            <form action="/auth/logout" method="post">
+              <button className="flex gap-0.5 items-center  cursor-pointer" type="submit">
+                <LogOut className="h-5 w-5" strokeWidth={1.5} />
+                <span className="text-sm"> ログアウト</span>
+              </button>
+            </form>
+          </div>
         </header>
 
         <div className="flex">
