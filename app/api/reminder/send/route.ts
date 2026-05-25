@@ -45,5 +45,9 @@ export async function GET() {
 
   console.log(tasks);
 
+  const sentAt = new Date().toISOString();
+
+  await supabase.from('task').update({ reminded_at: sentAt }).eq('id', task.id);
+
   return NextResponse.json({ count: tasks.length, tasks, email: data });
 }
