@@ -1,5 +1,8 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextResponse } from 'next/server';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function GET() {
   const supabase = await createClient();
@@ -23,7 +26,24 @@ export async function GET() {
     );
   }
 
+  const task = tasks[0];
+
+  const { data, error: resendError } = await resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: 'naoto2000x@gmail.com',
+    subject: `【リマインド】${task.title}`,
+    html: `<p>テスト</p>
+           <p>タスク名: ${task.title}</p>
+           <p>日付: ${task.task_date}</p>`
+  });
+
+  if (resendError) {
+    console.error(resendError);
+
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+  }
+
   console.log(tasks);
 
-  return NextResponse.json({ count: tasks.length, tasks });
+  return NextResponse.json({ count: tasks.length, tasks, email: data });
 }
