@@ -84,7 +84,7 @@ export async function addTask(formData: FormData) {
   let remindAt: string | null = null;
 
   if (typeof remind_at === 'string' && remind_at.trim() !== '') {
-    remindAt = new Date(remind_at).toISOString();
+    remindAt = new Date(`${remind_at}T09:00:00+09:00`).toISOString();
   }
 
   const taskStatus = resolveTaskStatus({
@@ -209,7 +209,7 @@ export async function updateTask(formData: FormData) {
   let remindAt: string | null = null;
 
   if (typeof remind_at === 'string' && remind_at.trim() !== '') {
-    remindAt = new Date(remind_at).toISOString();
+    remindAt = new Date(`${remind_at}T09:00:00+09:00`).toISOString();
   }
 
   const taskStatus = resolveTaskStatus({

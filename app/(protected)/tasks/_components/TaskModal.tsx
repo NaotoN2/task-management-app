@@ -169,7 +169,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
           <div>
             <label className="mb-1 block text-sm font-medium">リマインド通知日時（任意）</label>
             <input
-              type="datetime-local"
+              type="date"
               name="remind_at"
               defaultValue={formatDateTimeLocal(task?.remind_at)}
               className="w-full rounded-md border px-3 py-2"
