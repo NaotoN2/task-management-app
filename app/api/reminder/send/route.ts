@@ -26,28 +26,25 @@ export async function GET() {
     );
   }
 
-  const task = tasks[0];
-
-  const { data, error: resendError } = await resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: 'naoto2000x@gmail.com',
-    subject: `【リマインド】${task.title}`,
-    html: `<p>テスト</p>
+  for (const task of tasks) {
+    const { error: resendError } = await resend.emails.send({
+      from: 'onboarding@resend.dev',
+      to: 'naoto2000x@gmail.com',
+      subject: `【リマインド】${task.title}`,
+      html: `<p>テスト</p>
            <p>タスク名: ${task.title}</p>
            <p>日付: ${task.task_date}</p>`
-  });
+    });
 
-  if (resendError) {
-    console.error(resendError);
+    if (resendError) {
+      console.error(`${task.id}：送信に失敗しました`, resendError);
+      continue;
+    }
 
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    await supabase.from('task').update({ reminded_at: new Date().toISOString() }).eq('id', task.id);
   }
 
-  console.log(tasks);
-
-  const sentAt = new Date().toISOString();
-
-  await supabase.from('task').update({ reminded_at: sentAt }).eq('id', task.id);
-
-  return NextResponse.json({ count: tasks.length, tasks, email: data });
+  return Response.json({
+    success: true
+  });
 }
