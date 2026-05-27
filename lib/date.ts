@@ -27,3 +27,15 @@ export function formatDateTimeLocal(value?: string | null) {
 
   return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
+
+export function formatDate(value?: string | null) {
+  if (!value) return '';
+
+  const date = new Date(value);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}

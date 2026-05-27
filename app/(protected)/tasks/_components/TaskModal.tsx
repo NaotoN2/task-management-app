@@ -4,7 +4,7 @@ import type { Task, TaskListItem } from '@/app/types/task';
 import { addTask, deleteTask, updateTask } from '../actions';
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
-import { formatDateTimeLocal } from '@/lib/date';
+import { formatDate } from '@/lib/date';
 
 type TaskModalProps = {
   mode: 'create' | 'edit';
@@ -171,7 +171,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
             <input
               type="date"
               name="remind_at"
-              defaultValue={formatDateTimeLocal(task?.remind_at)}
+              defaultValue={formatDate(task?.remind_at)}
               className="w-full rounded-md border px-3 py-2"
             />
           </div>
