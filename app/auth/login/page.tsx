@@ -1,27 +1,10 @@
-'use client';
-
-import { createClient } from '@/lib/supabase/client';
-import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+import LoginForm from './LoginForm';
 
 export default function LoginPage() {
-  const supabase = createClient();
-  const searchParams = useSearchParams();
-  const error = searchParams.get('error');
-
-  const handleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: `${location.origin}/auth/callback`
-      }
-    });
-  };
-
   return (
-    <div>
-      <button className="cursor-pointer" onClick={handleLogin}>
-        Googleでログイン
-      </button>
-    </div>
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
