@@ -1,4 +1,4 @@
-import { createClient } from '@/lib/supabase/server';
+import { createClient as AdminClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const supabase = await createClient();
+  const supabase = AdminClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
   const now = new Date().toISOString();
 
@@ -22,6 +22,9 @@ export async function GET(request: NextRequest) {
     .is('reminded_at', null)
     .neq('status', 'done');
 
+  console.log('取得タスク:', tasks);
+  console.log('取得エラー:', error);
+
   if (error) {
     console.error(error);
     return NextResponse.json(
@@ -31,6 +34,10 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     );
   }
+
+  let sentCount = 0;
+  let failedCount = 0;
+  let updatedCount = 0;
 
   for (const task of tasks) {
     const { error: resendError } = await resend.emails.send({
@@ -44,13 +51,20 @@ export async function GET(request: NextRequest) {
 
     if (resendError) {
       console.error(`${task.id}：送信に失敗しました`, resendError);
+      failedCount++;
       continue;
     }
+
+    sentCount++;
 
     await supabase.from('task').update({ reminded_at: new Date().toISOString() }).eq('id', task.id);
   }
 
   return Response.json({
-    success: true
+    success: true,
+    targetCount: tasks.length,
+    sentCount,
+    failedCount,
+    updatedCount
   });
 }
