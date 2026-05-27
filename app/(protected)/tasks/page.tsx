@@ -9,6 +9,7 @@ import NewTaskButton from './_components/NewTaskButton';
 import SortPopover from './_components/SortPopover';
 import EditTaskButton from './_components/EditTaskButton';
 import MemoPopover from '@/components/shared/MemoPopover';
+import { Bell, BellCheck } from 'lucide-react';
 
 const STATUS_LABELS: Record<Task['status'], string> = { todo: '未着手', in_progress: '進行中', done: '完了' };
 const PRIORITY_LABELS: Record<Task['priority'], string> = { low: '低', medium: '中', high: '高' };
@@ -37,7 +38,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   let query = supabase
     .from('task')
-    .select('id, title, spot_task ,task_date, status, priority, memo,remind_at')
+    .select('id, title, spot_task ,task_date, status, priority, memo,remind_at,reminded_at')
     .eq('user_id', user.id);
 
   if (normalizedTypeValues.length === 1) {
@@ -106,6 +107,7 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
                   <th className="border-b px-4 py-3 text-left">日付・期限</th>
                   <th className="border-b px-4 py-3 text-left">状況</th>
                   <th className="border-b px-4 py-3 text-left">重要度</th>
+                  <th className="border-b px-4 py-3 text-left">通知</th>
                   <th className="border-b px-4 py-3 text-left">メモ</th>
                   <th className="border-b px-4 py-3 text-left">変更</th>
                 </tr>
@@ -124,6 +126,17 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
                     </td>
                     <td className="border-b px-4 py-3">{STATUS_LABELS[task.status]}</td>
                     <td className="border-b px-4 py-3">{PRIORITY_LABELS[task.priority]}</td>
+                    <td className="border-b px-4 py-3">
+                      {task.remind_at ? (
+                        task.reminded_at ? (
+                          <BellCheck className="text-green-600" strokeWidth={1.5} />
+                        ) : (
+                          <Bell strokeWidth={1.5} />
+                        )
+                      ) : (
+                        '-'
+                      )}
+                    </td>
                     <td className="border-b px-4 py-3">{task.memo ? <MemoPopover memo={task.memo} /> : '-'}</td>
                     <td className="border-b px-4 py-3">
                       <EditTaskButton task={task} />

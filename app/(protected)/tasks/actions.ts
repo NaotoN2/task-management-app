@@ -225,7 +225,8 @@ export async function updateTask(formData: FormData) {
     priority: taskPriority,
     task_date: taskDate,
     memo: memoText,
-    remind_at: remindAt
+    remind_at: remindAt,
+    reminded_at: null
   };
 
   const { error } = await supabase.from('task').update(updatedTask).eq('id', taskIdNumber).eq('user_id', user.id);
