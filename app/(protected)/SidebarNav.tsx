@@ -9,7 +9,7 @@ export default function SidebarNav() {
   const getClass = (href: string) => (pathname === href ? 'font-bold text-blue-600' : 'text-gray-700');
 
   return (
-    <nav className="flex flex-col gap-2">
+    <nav className="flex flex-row justify-between p-4  md:flex-col md:gap-2 md:p-0 md:mt-2">
       <Link href={'/dashboard'} className={getClass('/dashboard')}>
         Dashboard
       </Link>
@@ -19,7 +19,6 @@ export default function SidebarNav() {
       <Link href={'/calendar'} className={getClass('/calendar')}>
         Calendar
       </Link>
-      
     </nav>
   );
 }

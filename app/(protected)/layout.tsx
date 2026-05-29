@@ -52,11 +52,12 @@ export default async function ProtectedLayout({ children }: { children: ReactNod
           </div>
         </header>
 
-        <div className="flex">
-          <aside className="px-4 w-48">
+        <div className="flex flex-col md:flex-row">
+          <aside className="w-full border-b px-4 md:w-48 md:border-b-0">
             <SidebarNav />
           </aside>
-          <main className="flex-1">{children}</main>
+
+          <main className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
     </TooltipProvider>

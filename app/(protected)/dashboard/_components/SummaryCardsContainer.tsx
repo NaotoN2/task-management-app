@@ -2,8 +2,6 @@ import { createClient } from '@/lib/supabase/server';
 import SummaryCard from './SummaryCard';
 import { getTodayString } from '@/lib/date';
 
-
-
 export default async function SummaryCardsContainer() {
   const supabase = await createClient();
   const {
@@ -40,7 +38,7 @@ export default async function SummaryCardsContainer() {
   ]);
 
   return (
-    <section className="mb-6 grid grid-cols-3 gap-4">
+    <section className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       <SummaryCard title="今日のスポットタスク" count={todayAndSpotCount ?? 0} />
       <SummaryCard title="進行中" count={progressCount ?? 0} />
       <SummaryCard title="期限切れ" count={overdueCount ?? 0} />

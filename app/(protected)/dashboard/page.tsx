@@ -12,7 +12,7 @@ export default async function DashboardPage() {
 
       <SummaryCardsContainer />
 
-      <section className="grid grid-cols-[2fr_1fr] items-stretch gap-4">
+      <section className="grid grid-cols-1 gap-4 xl:grid-cols-[2fr_1fr]">
         <TodayTasksPanel />
 
         <div className="flex flex-col gap-4">
