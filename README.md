@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Task Manager
+
+Next.js / Supabase をベースに個人開発したタスク管理アプリ
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+http://localhost:3000 によりローカル環境でアプリを起動します。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 使用技術
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Next.js
+- React
+- TypeScript
+- Supabase
+- PostgreSQL
+- Tailwind CSS
+- shadcn/ui
+- FullCalendar
+- Vercel
+- Vercel Cron
+- Resend
 
-## Learn More
+## 主な機能
 
-To learn more about Next.js, take a look at the following resources:
+- Supabase OAuthを用いたGoogle認証
+- タスクをテーブル形式で管理
+- データベース上でタスクを新規追加、編集、削除
+- ステータス（未着手、進行中、完了）管理
+- 重要度（低、中、高）管理
+- ソート機能（日付、重要度）
+- フィルタ機能（タスク分類、進行状況、重要度）
+- タスク検索機能（文字列入力）
+- ダッシュボードでのタスク集計
+- ダッシュボードでの今日やるタスク、緊急・期限切れタスク一覧表示
+- ダッシュボードでの簡易カレンダー表示
+- カレンダー表示
+- リマインドメール通知
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+##　スクリーンショット
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##　工夫した点
 
-## Deploy on Vercel
+- Supabase RLS によるユーザー毎のデータ分離
+- スポット（当日限定）タスクと期限付きタスクの分類
+- スポットタスクは当日まで未着手状態を維持するように
+- ENUM による status / priority 管理
+- Databaseを用いることによる型管理の一括化
+- lucide iconとshadcn/uiを組み合わせたメモポップオーバー
+- FullCalendarの導入＆連携
+- Vercel CronとResendを組み合わせたリマインド通知
+- SupabaseService Roleを用いてユーザーRLSとVercel Cronを両立
+- レスポンシブ対応
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 今後の改善
