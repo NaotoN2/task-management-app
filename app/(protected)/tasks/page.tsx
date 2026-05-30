@@ -83,22 +83,24 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
 
   return (
     <main className="p-6">
+      <div className=" mb-6 flex flex-col xl:flex-row xl:justify-between xl:max-w-[1200px] xl:mx-auto">
+        <h1 className="mb-2 text-2xl font-bold">タスク一覧</h1>
+        <div className="flex flex-col items-start gap-2 lg:flex-row">
+          <div className="flex gap-4">
+            <SearchForm />
+          </div>
+          <div className="flex gap-3">
+            <SortPopover />
+
+            <FilterPopover />
+
+            <NewTaskButton />
+          </div>
+        </div>
+      </div>
       <div className="overflow-x-auto">
         <div className="mx-auto max-w-[1200px] min-w-[1000px]">
-          <div className="mb-6 flex items-center justify-between">
-            <h1 className="text-2xl font-bold">タスク一覧</h1>
-            <div className="flex items-center gap-2">
-              <SearchForm />
-
-              <SortPopover />
-
-              <FilterPopover />
-
-              <NewTaskButton />
-            </div>
-          </div>
-
-          <div className="overflow-x-auto rounded-lg border">
+          <div className="rounded-lg border">
             <table className="min-w-full border-collapse">
               <thead className="bg-gray-100">
                 <tr>
@@ -137,7 +139,9 @@ export default async function TasksPage({ searchParams }: TaskPageProps) {
                         '-'
                       )}
                     </td>
-                    <td className="border-b px-4 py-3">{task.memo ? <MemoPopover memo={task.memo} /> : '-'}</td>
+                    <td className="border-b px-4 py-3">
+                      {task.memo ? <MemoPopover memo={task.memo} iconClass={'h-6 w-6'} /> : '-'}
+                    </td>
                     <td className="border-b px-4 py-3">
                       <EditTaskButton task={task} />
                     </td>
