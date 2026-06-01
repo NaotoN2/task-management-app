@@ -14,24 +14,16 @@ type TaskModalProps = {
 
 export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
   const isEditMode = mode === 'edit';
-  const today = new Date().toLocaleDateString('sv-SE', {
-    timeZone: 'Asia/Tokyo'
-  });
 
   const [isSpotTask, setIsSpotTask] = useState(task?.spot_task ?? false);
   const [status, setStatus] = useState<Task['status']>(task?.status ?? 'todo');
   const [taskDate, setTaskDate] = useState(task?.task_date ?? '');
 
-  const isTodaySpotTask = isSpotTask && taskDate === today;
-  const isNonTodaySpotTask = isSpotTask && !isTodaySpotTask;
-
   const statusOptions = isSpotTask
-    ? isTodaySpotTask
-      ? [
-          { value: 'todo', label: '未着手' },
-          { value: 'done', label: '完了' }
-        ]
-      : [{ value: 'todo', label: '未着手' }]
+    ? [
+        { value: 'todo', label: '未着手' },
+        { value: 'done', label: '完了' }
+      ]
     : [
         { value: 'todo', label: '未着手' },
         { value: 'in_progress', label: '進行中' },
@@ -140,7 +132,7 @@ export default function TaskModal({ mode, onClose, task }: TaskModalProps) {
 
               <select
                 name="status"
-                value={isNonTodaySpotTask ? 'todo' : status}
+                value={status}
                 onChange={(e) => setStatus(e.target.value as Task['status'])}
                 className="w-full rounded-md border px-3 py-2"
               >

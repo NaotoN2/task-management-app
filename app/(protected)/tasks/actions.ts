@@ -1,7 +1,6 @@
 'use server';
 
 import { NewTask, Task, UpdatedTask } from '@/app/types/task';
-import { getTodayString } from '@/lib/date';
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
@@ -16,24 +15,11 @@ async function getActionContext() {
   return { supabase, user };
 }
 
-function resolveTaskStatus({
-  spotTask,
-  taskDate,
-  status
-}: {
-  spotTask: boolean;
-  taskDate: string;
-  status: Task['status'];
-}): Task['status'] {
-  const today = getTodayString();
-
+function resolveTaskStatus({ spotTask, status }: { spotTask: boolean; status: Task['status'] }): Task['status'] {
   if (!spotTask) {
     return status;
   }
-  if (taskDate === today) {
-    return status === 'done' ? 'done' : 'todo';
-  }
-  return 'todo';
+  return status === 'done' ? 'done' : 'todo';
 }
 
 export async function addTask(formData: FormData) {
@@ -89,7 +75,6 @@ export async function addTask(formData: FormData) {
 
   const taskStatus = resolveTaskStatus({
     spotTask,
-    taskDate,
     status: status as Task['status']
   });
 
@@ -214,7 +199,6 @@ export async function updateTask(formData: FormData) {
 
   const taskStatus = resolveTaskStatus({
     spotTask,
-    taskDate,
     status: status as Task['status']
   });
 
