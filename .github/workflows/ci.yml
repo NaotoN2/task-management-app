@@ -4,14 +4,13 @@ on:
   push:
     branches:
       - main
-      - setup-ci
 
   pull_request:
     branches:
       - main
 
 jobs:
-  lint:
+  checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,3 +33,6 @@ jobs:
 
       - name: Run lint
         run: pnpm lint
+        
+      - name: Run tests
+        run: pnpm test:run
