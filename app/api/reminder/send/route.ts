@@ -22,9 +22,6 @@ export async function GET(request: NextRequest) {
     .is('reminded_at', null)
     .neq('status', 'done');
 
-  console.log('取得タスク:', tasks);
-  console.log('取得エラー:', error);
-
   if (error) {
     console.error(error);
     return NextResponse.json(
@@ -37,7 +34,6 @@ export async function GET(request: NextRequest) {
 
   let sentCount = 0;
   let failedCount = 0;
-  let updatedCount = 0;
 
   for (const task of tasks) {
     const { error: resendError } = await resend.emails.send({
@@ -65,6 +61,5 @@ export async function GET(request: NextRequest) {
     targetCount: tasks.length,
     sentCount,
     failedCount,
-    updatedCount
   });
 }
