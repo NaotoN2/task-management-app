@@ -37,7 +37,7 @@ describe('isTaskPriority', () => {
   });
 });
 
-describe('isTaskTyoeValue', () => {
+describe('isTaskTypeValue', () => {
   it('normalならtrue', () => {
     expect(isTaskTypeValue('normal')).toBe(true);
   });
