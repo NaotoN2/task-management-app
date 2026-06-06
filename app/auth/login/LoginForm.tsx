@@ -1,6 +1,7 @@
 'use client';
 
 import { createClient } from '@/lib/supabase/client';
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
 export default function LoginForm() {
@@ -27,7 +28,7 @@ export default function LoginForm() {
         {error && <p className="text-red-500">ログインに失敗しました。</p>}
 
         <button className="cursor-pointer" onClick={handleLogin}>
-          <img src="/google-ctn.svg" alt="Googleで続ける"/>
+          <Image src="/google-ctn.svg" alt="Googleで続ける"/>
         </button>
       </div>
     </main>
